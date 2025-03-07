@@ -1,9 +1,0 @@
-{
-  "name": "BS3221",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/BS3221/src",
-  "projectType": "application",
-  "tags": [],
-  "// targets": "to see all targets run: nx show project BS3221 --web",
-  "targets": {}
-}
