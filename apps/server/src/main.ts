@@ -13,7 +13,7 @@ async function bootstrap() {
   // Enable CORS to allow requests from your React frontend
   app.enableCors({
     origin: "http://localhost:4200", // Adjust to match your React frontend URL
-    methods: "GET,POST,PUT,DELETE",
+    methods: "GET,POST,PUT,DELETE,PATCH",
     allowedHeaders: "Content-Type,Authorization",
   });
 

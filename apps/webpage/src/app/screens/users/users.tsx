@@ -19,7 +19,44 @@ export function Users() {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
+  const handleDeactivate = async (userId: number) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/users/${userId}/deactivate`, {
+        method: "PATCH",
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to deactivate user");
+      }
+  
+      // Update state to reflect the change
+      setUsers(users.map(user => 
+        user.id === userId ? { ...user, active: false } : user
+      ));
+    } catch (error) {
+      console.error("Error deactivating user:", error);
+    }
+  };
+  
+  const handleDelete = async (userId: number) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+        method: "DELETE",
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to delete user");
+      }
+  
+      // Remove the user from state
+      setUsers(users.filter(user => user.id !== userId));
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
   useEffect(() => {
+
     const fetchUsers = async () => {
       try {
         const response = await fetch("http://localhost:3000/api/users");
@@ -38,6 +75,7 @@ export function Users() {
     };
 
     fetchUsers();
+
   }, []);
 
   if (loading) return <p>Loading users...</p>;
@@ -121,8 +159,8 @@ export function Users() {
               <td>{user.lastName}</td>
               <td>{user.active ? "✅" : "❌"}</td>
               <td className="action-buttons">
-                <button className="deactivate">Deactivate</button>
-                <button className="delete">Delete</button>
+                <button className="deactivate" onClick={() => handleDeactivate(user.id)}>Deactivate</button>
+                <button className="delete" onClick={() => handleDelete(user.id)}>Delete</button>
                 <button className="reset-password">Reset Password</button>
               </td>
             </tr>

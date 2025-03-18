@@ -21,4 +21,24 @@ export class UserService {
     const user = this.userRepository.create(userData);
     return this.userRepository.save(user);
   }
+
+  async deleteUser(id: number): Promise<void> {
+    const result = await this.userRepository.delete(id);
+  
+    if (result.affected === 0) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+  }
+
+  async deactivateUser(id: number): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+  
+    if (!user) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+  
+    user.active = false; // Set active status to false
+    return this.userRepository.save(user); // Save the updated user
+  }
+
 }
