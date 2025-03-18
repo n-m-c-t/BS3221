@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Login from './screens/login/login';
 import Home from './screens/home/home';
 import Settings from './screens/settings/settings';
+import Users from "./screens/users/users";
 
 export function App() {
   return (
@@ -10,6 +11,7 @@ export function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/home" element={<Home />} />
       <Route path="/settings" element={<Settings />} />
+      <Route path="/users" element={<Users />} />
       {/* <Route path="/register" element={<Register />} /> */}
     </Routes>
     

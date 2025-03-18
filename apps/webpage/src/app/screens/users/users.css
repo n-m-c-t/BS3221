@@ -1,0 +1,122 @@
+/* Global */
+body {
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #f3f2f1, #ffffff);
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1d1d1d;
+    margin-bottom: 1rem;
+  }
+  
+  /* Main Content Styling */
+  .flex-1 {
+    margin-left: 225px; /* Push the main content to the right of the sidenav */
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table-container {
+    margin-top: 2rem; /* Increased margin to create space below title */
+  }
+  
+/* Search Bar Container */
+.search-bar-container {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    /* width: 100%; */
+  }
+  
+  .search-bar {
+    width: 300px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-collapse: collapse;
+  }
+
+  
+  /* Table Styling */
+  table {
+    width: 1000px;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #333;
+    color: white;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Action Buttons */
+  button {
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  button.deactivate {
+    background-color: #ff9800;
+    color: white;
+  }
+  
+  button.deactivate:hover {
+    background-color: #e68900;
+  }
+  
+  button.delete {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  button.delete:hover {
+    background-color: #d32f2f;
+  }
+  
+  button.reset-password {
+    background-color: #2196f3;
+    color: white;
+  }
+  
+  button.reset-password:hover {
+    background-color: #1976d2;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  

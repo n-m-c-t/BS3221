@@ -6,6 +6,11 @@ import { User } from './user.entity';
 export class UserController {
   constructor(private userService: UserService) {}
 
+  @Get()
+  async getAllUsers(): Promise<User[]> {
+    return this.userService.findAllUsers();
+  }
+
   @Get(':id')
   async getUser(@Param('id') id: number): Promise<User> {
     return this.userService.findUserById(id);
