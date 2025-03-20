@@ -21,10 +21,6 @@ export function Login() {
 
   return (
     <div className="flex h-screen">
-      <div className="sidenav bg-gray-800 text-white w-64 h-full p-4 flex flex-col space-y-4">
-      <img src={logo} alt="Logo" className="logo" />
-      </div>
-      <div className="container flex-1 flex items-center justify-center">
         <div className="login-box">
           <h2 className="title">Sign in</h2>
           <form onSubmit={handleLogin}>
@@ -51,7 +47,6 @@ export function Login() {
             </button>
           </form>
         </div>
-      </div>
     </div>
   );
 }

@@ -97,7 +97,7 @@ export function Users() {
         <img src={logo} alt="Logo" className="logo" />
 
         {/* Sidebar Links */}
-        {["about", "home", "submission", "audit", "users", "settings", "contact"].map((page) => (
+        {["home", "submission", "audit", "users", "settings",].map((page) => (
           <a key={page} href={page}>
             {page.charAt(0).toUpperCase() + page.slice(1)}
           </a>
