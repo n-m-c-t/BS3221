@@ -5,11 +5,10 @@ import './layout.css'; // Import the new CSS file
 const Layout: React.FC = () => {
   return (
     <div className="layout-container">
-      <SideNav>
+      <SideNav />
       <div className="main-content">
         <Outlet />
       </div>
-      </SideNav>
     </div>
   );
 };
