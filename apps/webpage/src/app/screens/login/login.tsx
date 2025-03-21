@@ -19,8 +19,8 @@ export function Login() {
     }
   };
 
-  return (
-    <div className="flex h-screen">
+  return (    
+    <div className="flex h-screen">      
         <div className="login-box">
           <h2 className="title">Sign in</h2>
           <form onSubmit={handleLogin}>

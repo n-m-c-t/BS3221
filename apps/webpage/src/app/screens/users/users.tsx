@@ -92,21 +92,6 @@ export function Users() {
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
-      <div className="sidenav">
-        <img src={logo} alt="Logo" className="logo" />
-
-        {/* Sidebar Links */}
-        {["home", "submission", "audit", "users", "settings",].map((page) => (
-          <a key={page} href={page}>
-            {page.charAt(0).toUpperCase() + page.slice(1)}
-          </a>
-        ))}
-
-        {/* Logout Button */}
-        <button className="logout-btn" onClick={() => setShowModal(true)}>Logout</button>
-      </div>
-
       {/* Main Content */}
       <div className="flex-1 p-5">
   {/* Logout Confirmation Modal */}
@@ -123,7 +108,6 @@ export function Users() {
   )}
 
   {/* User List */}
-  <div className="container mx-auto mt-10 p-5">
     <h2>Users List</h2>
 
     {/* Search Bar */}
@@ -170,7 +154,6 @@ export function Users() {
     </div>
   </div>
 </div>
-    </div>
   );
 }
 

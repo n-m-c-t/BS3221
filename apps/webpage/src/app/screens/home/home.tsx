@@ -9,33 +9,7 @@ export function Home() {
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
-      <div className="sidenav bg-gray-800 text-white w-64 h-full p-4 flex flex-col">
-        <img src={logo} alt="Logo" className="logo" />
-
-        {/* Sidebar Links */}
-        {["home", "submission", "audit", "users", "settings"].map((page) => (
-          <a key={page} href={page} className="py-2 hover:bg-gray-700 block">
-            {page.charAt(0).toUpperCase() + page.slice(1)}
-          </a>
-        ))}
-
-        {/* Logout Button */}
-        <button className="logout-btn" onClick={() => setShowModal(true)}>Logout</button>
-      </div>
-
-      {/* Logout Confirmation Modal */}
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3>Are you sure you want to log out?</h3>
-            <div className="modal-actions">
-              <button className="modal-btn cancel" onClick={() => setShowModal(false)}>Cancel</button>
-              <button className="modal-btn confirm" onClick={() => navigate('/login')}>Confirm</button>
-            </div>
-          </div>
-        </div>
-      )}
+        <h1 className="text-3xl font-bold">Home screen</h1>
     </div>
   );
 }
