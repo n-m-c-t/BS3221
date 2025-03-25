@@ -4,11 +4,9 @@
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  max-width: 400px;
-  width: 100%; /* Ensures it takes full available width */
-  box-sizing: border-box; /* Prevents overflow by including padding and borders within the width */
+  max-width: 600px;
+  width: 100%;
 }
-
 
 .settings-title {
   font-size: 20px;
@@ -16,12 +14,28 @@
   margin-bottom: 1.5rem;
 }
 
+.settings-panel {
+  margin-bottom: 2rem;
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.settings-label,
+.settings-input,
+.checkbox-label,
+.save-settings-btn,
+.change-password-btn {
+  display: block;
+}
+
 .settings-label {
   font-size: 14px;
   font-weight: 500;
-  display: block;
   margin-bottom: 0.5rem;
-  text-align: left;
 }
 
 .settings-input {
@@ -30,13 +44,10 @@
   margin-bottom: 1.2rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 14px;
-  transition: border-color 0.3s;
 }
 
 .settings-input:focus {
   border-color: #0078d4;
-  outline: none;
 }
 
 .checkbox-label {
@@ -44,22 +55,20 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 14px;
-  font-weight: 500;
   margin-bottom: 1rem;
 }
 
 .save-settings-btn, .change-password-btn {
   background-color: #0078d4;
   color: white;
-  border: none;
   padding: 0.5rem;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   border-radius: 6px;
   width: 100%;
-  transition: background 0.3s ease-in-out;
   margin-bottom: 1rem;
+  transition: background 0.3s;
 }
 
 .save-settings-btn:hover, .change-password-btn:hover {
@@ -71,4 +80,112 @@
   font-size: 14px;
   font-weight: 600;
   margin-top: 1rem;
+}
+
+/* Wrapper for settings and location table */
+.settings-main-container {
+  display: flex;
+  gap: 10rem;
+  padding: 2rem;
+  height: 100vh; /* Ensure full height */
+  align-items: stretch; /* Make both containers stretch to equal height */
+}
+
+/* Settings Container */
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Allow settings container to take up space */
+}
+
+/* Location Table Container */
+.location-table-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Allow location container to take up space */
+  max-width: 600px;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-top: 2rem;
+}
+
+.location-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.location-table-container th, .location-table-container td {
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  color: #000;
+}
+
+.location-table-container th {
+  background-color: #f4f4f4;
+}
+
+.location-table-container td {
+  background-color: white;
+}
+
+.delete {
+  background-color: #d9534f;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete:hover {
+  background-color: #c9302c;
+}
+
+/* Search bar styling */
+.search-bar input {
+  width: 100%;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: #f4f4f4;
+  padding: 0.6rem;
+}
+
+.search-bar input:focus {
+  border-color: #0078d4;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.pagination-btn {
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #005a9e;
+}
+
+.page-number {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
 }

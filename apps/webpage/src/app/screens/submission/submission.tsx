@@ -9,7 +9,7 @@ export function Submission() {
     const navigate = useNavigate();
   
     return (
-      <p>WEBPAGE</p>
+      <p>Submissions WEBPAGE</p>
     );
   }
   
