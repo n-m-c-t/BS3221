@@ -10,25 +10,25 @@
   import { LocationController } from '../location/location.controller';
   // import { Admin } from 'typeorm';
 
-  @Module({
-    imports: [
-      TypeOrmModule.forRoot({
-        type: 'mysql', // or 'mssql' for prod/test
-        // host: 'DB_URL',
-        host: '127.0.0.1',
-        // port: DB_PORT,
-        port: 3306,
-        // username: 'DB_USER',
-        // username: 'admin',
-        username: 'root',
-        // password: 'DB_PASS',
-        // password: 'password',
-        password: 'root',
-        // database: 'DB_NAME',
-        database: 'mydb',
-        entities: [User, Location],
-        synchronize: true, // Set this to false in production
-      }),
+@Module({
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql', // or 'mssql' for prod/test
+      // host: 'DB_URL',
+      host: '127.0.0.1',
+      // port: DB_PORT,
+      port: 3306,
+      // username: 'DB_USER',
+      // username: 'admin',
+      username: 'root',
+      // password: 'DB_PASS',
+      password: 'password',
+      // password: 'root',
+      // database: 'DB_NAME',
+      database: 'mydb',
+      entities: [User, Location],
+      synchronize: true, // Set this to false in production
+    }),
 
       TypeOrmModule.forFeature([User, Location]), // Add User to the feature
     ],

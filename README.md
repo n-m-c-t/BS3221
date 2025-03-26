@@ -1,6 +1,37 @@
 # BS3221
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+## Local Testing using Makefile
+
+Start everything in detached mode, use:
+```sh
+make up
+```
+
+Stop all services, use:
+```sh
+make down
+```
+
+Restart everything, use:
+```sh
+make restart
+```
+
+Check logs, use:
+```sh
+make logs
+```
+
+Run the frontend manually, use:
+```sh
+make web
+```
+
+Run the backend manually, use:
+```sh
+make server
+```
+
 
 ## Run tasks
 
