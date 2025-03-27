@@ -15,7 +15,7 @@ export function Settings() {
   const [newLocationName, setNewLocationName] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState(""); // Added state for search query
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
-  const [locationsPerPage] = useState(10); // Set the number of locations per page (adjustable)
+  const [locationsPerPage] = useState(7); // Set the number of locations per page (adjustable)
   const navigate = useNavigate();
 
   const savedPassword = "userSavedPassword"; // Mock saved password, replace with actual saved password
@@ -121,103 +121,93 @@ export function Settings() {
   };
 
   return (
-    <div className="settings-main-container">
-      {/* Settings Container */}
-      <div className="settings-container">
-        <div className="settings-box">
-          <h2 className="settings-title">Settings</h2>
-
-          {/* General Settings Panel */}
-          <div className="settings-panel">
-            <h3 className="panel-title">General Settings</h3>
-            {/* Theme and Accessibility Options */}
-            <label className="settings-label">
-              Theme:
-              <select
-                className="settings-input"
-                value={theme}
-                onChange={(e) => setTheme(e.target.value)}
-              >
-                <option>Light</option>
-                <option>Dark</option>
-              </select>
-            </label>
-            <label className="settings-label checkbox-label">
-              <input
-                type="checkbox"
-                checked={highContrast}
-                onChange={(e) => setHighContrast(e.target.checked)}
-              />
-              Enable High Contrast
-            </label>
-            <button className="save-settings-btn">Save</button>
-
-            {/* User Settings Panel */}
-            <h3 className="panel-title">User Settings</h3>
-            <button
-              className="change-password-btn"
-              onClick={() => setShowChangePasswordModal(true)}
-            >
-              Change Password
-            </button>
-          </div>
-
-          {/* Location Settings Panel */}
-          <div className="settings-panel">
-            <h3 className="panel-title">Location Settings</h3>
-            <div className="add-location-form">
-              <input
-                type="text"
-                value={newLocationName}
-                onChange={(e) => setNewLocationName(e.target.value)}
-                placeholder="Enter new location name"
-                className="settings-input"
-              />
-              <button onClick={handleAddLocation} className="save-settings-btn">
-                Add Location
-              </button>
-              {errorMessage && <div className="error-message">{errorMessage}</div>}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Search Bar for Location Table */}
-      <div className="location-table-container">
-      <h3 className="panel-title">Location Search</h3>
-        <div className="search-bar">
-          <input
-            type="text"
+    <div className="settings-container">
+      <div className="settings-pane">
+        <h3>Usability, User & Location Settings</h3>
+        <h4>Accessibility Settings</h4>
+        {/* Light / Dark Mode */}
+        <label className="settings-label">
+          Theme:
+          <select
             className="settings-input"
-            placeholder="Search locations..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)} // Handle input change
+            value={theme}
+            onChange={(e) => setTheme(e.target.value)}
+          >
+            <option>Light</option>
+            <option>Dark</option>
+          </select>
+        </label>
+        {/* High Contrast */}
+        <label className="settings-label checkbox-label">
+          <input
+            type="checkbox"
+            checked={highContrast}
+            onChange={(e) => setHighContrast(e.target.checked)}
           />
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentLocations.map((location) => (
-              <tr key={location.id}>
-                <td>{location.name}</td>
-                <td>
-                  <button
-                    className="delete"
-                    onClick={() => handleDeleteLocation(location.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
+          Enable High Contrast
+        </label>
+        {/* Current User, Change Password */}
+        <h4 className="panel-title">User Settings</h4>
+        <button
+          className="change-password-btn"
+          onClick={() => setShowChangePasswordModal(true)}
+        >
+          Change Password
+        </button>
+        {/* Add Location */}
+        <h4>Add Location</h4>
+          <div className="add-location-form">
+            <input
+              type="text"
+              value={newLocationName}
+              onChange={(e) => setNewLocationName(e.target.value)}
+              placeholder="Enter new location name"
+              className="settings-input"
+            />
+            <button onClick={handleAddLocation} className="save-settings-btn">
+              Add Location
+            </button>
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+          </div>
+      </div>
+    
+      {/* MAKE THIS ADMIN ONLY FOR DELETE BUTTON */}
+      <div className="settings-pane">
+        <h3>Location Search</h3>
+        <div className="search-bar">
+            <input
+              type="text"
+              className="settings-input"
+              placeholder="Search locations..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)} // Handle input change
+            />
+          </div>      
+
+          <table className="location-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        
+            </thead>
+            <tbody>
+              {currentLocations.map((location) => (
+                <tr key={location.id}>
+                  <td>{location.name}</td>
+                  <td>
+                    <button
+                      className="delete"
+                      onClick={() => handleDeleteLocation(location.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
         {/* Pagination Controls */}
         <div className="pagination-controls">
           <button 
@@ -238,6 +228,7 @@ export function Settings() {
             Next
           </button>
         </div>
+
       </div>
     </div>
   );
