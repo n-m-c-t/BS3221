@@ -1,0 +1,13 @@
+/* layout.css */
+.layout-container {
+    display: flex;
+    height: 100vh; /* Ensures the container fills the full viewport height */
+}
+
+.main-content {
+    flex: 1; /* Allows the content area to expand fully */
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ensures full height */
+    margin-left: 225px;
+}

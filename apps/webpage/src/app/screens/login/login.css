@@ -9,22 +9,24 @@
     margin-left: 225px;
   }
   
-  .login-box {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    width: 26rem;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .logo {
-    width: 120px;
-    margin-bottom: 1rem;
-  }
+/* Login Box Styling */
+.login-box {
+  width: 100%;
+  max-width: 400px; /* Adjust size as needed */
+  padding: 2rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  /* Centering */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
   
   .title {
     font-size: 1.3rem;
@@ -104,65 +106,3 @@
   .signin-options:hover {
     background-color: #f3f3f3;
   }
-
-.sidenav {
-    background-color: #2d2d2d;
-    color: white;
-    width: 225px;  /* Set width of sidebar */
-    height: 100vh; /* Full height of the screen */
-    padding: 2rem 1rem;
-    display: flex;
-    flex-direction: column;
-    position: fixed;  /* Make it fixed to the left */
-    left: 0;
-    top: 0;
-    overflow-y: auto; /* Ensures content doesn't overflow outside the sidebar */
-    
-}
-
-.sidenav a,
-.logout-btn {
-    padding: 1rem;
-    font-size: 1rem;
-    font-weight: 500;
-    text-align: left;
-    color: white;
-    text-decoration: none;
-    margin-bottom: 0.5rem;
-    border-radius: 0.25rem;
-    transition: background-color 0.3s;
-    display: block;
-    width: 95%;
-    font-family: inherit;
-}
-
-.sidenav a:hover,
-.logout-btn:hover {
-    background-color: #444; /* Darker shade on hover */
-}
-
-.logout-btn {
-    border: none;
-    background: #d9534f;
-    cursor: pointer;
-    outline: none;
-    margin-top: auto;
-    margin-bottom: 2.5rem;
-}
-
-.logo {
-  width: 120px; /* Adjust the width of the logo */
-  height: auto; /* Maintain the aspect ratio */
-  margin-bottom: 2rem; /* Space below the logo */
-  align-self: center; /* Center the logo horizontally */
-  border: none; /* Remove any borders around the image */
-  background: none; /* Ensure there is no background */
-  filter: brightness(0) invert(1); /* Makes the image white */
-}
-
-a {
-  font-weight: bold;
-}
-button {
-  font-weight: bold;
-}

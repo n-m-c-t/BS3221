@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global */
+body {
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #f3f2f1, #ffffff);
+    display: flex;
+    justify-content: center;
+}

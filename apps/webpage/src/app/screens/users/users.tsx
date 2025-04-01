@@ -91,85 +91,89 @@ export function Users() {
   });
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <div className="sidenav">
-        <img src={logo} alt="Logo" className="logo" />
+    <div className="user-container">
+      {/* Logout Confirmation Modal */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Are you sure you want to log out?</h3>
+            <div className="modal-actions">
+              <button className="modal-btn cancel" onClick={() => setShowModal(false)}>Cancel</button>
+              <button className="modal-btn confirm" onClick={() => navigate('/login')}>Confirm</button>
+            </div>
+          </div>
+        </div>
+      )}
 
-        {/* Sidebar Links */}
-        {["about", "home", "submission", "audit", "users", "settings", "contact"].map((page) => (
-          <a key={page} href={page}>
-            {page.charAt(0).toUpperCase() + page.slice(1)}
-          </a>
-        ))}
+      {/* User List */}
+      <h2>Users List</h2>
 
-        {/* Logout Button */}
-        <button className="logout-btn" onClick={() => setShowModal(true)}>Logout</button>
+      {/* Search Bar */}
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search users..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <button className="create-user"
+          // onClick={() => handlePageChange(currentPage - 1)} 
+        >Create User
+        </button>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 p-5">
-  {/* Logout Confirmation Modal */}
-  {showModal && (
-    <div className="modal-overlay">
-      <div className="modal">
-        <h3>Are you sure you want to log out?</h3>
-        <div className="modal-actions">
-          <button className="modal-btn cancel" onClick={() => setShowModal(false)}>Cancel</button>
-          <button className="modal-btn confirm" onClick={() => navigate('/login')}>Confirm</button>
+      {/* User Table */}
+      <div className="users-table">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Active</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.map((user) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.email}</td>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
+                <td>{user.active ? "✅" : "❌"}</td>
+                <td className="action-buttons">
+                  <button className="deactivate" onClick={() => handleDeactivate(user.id)}>Deactivate</button>
+                  <button className="delete" onClick={() => handleDelete(user.id)}>Delete</button>
+                  <button className="reset-password">Reset Password</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Pagination Controls */}
+        <div className="pagination-controls">
+          <button 
+            className="pagination-btn"
+            // onClick={() => handlePageChange(currentPage - 1)} 
+            // disabled={currentPage === 1} // Disable the "Previous" button on the first page
+          >
+            Previous
+          </button>
+          <span className="page-number">
+            {/* Page {currentPage} of {Math.ceil(filteredLocations.length / locationsPerPage)} */}
+          </span>
+          <button 
+            className="pagination-btn"
+            // // onClick={() => handlePageChange(currentPage + 1)} 
+            // disabled={currentPage === Math.ceil(filteredLocations.length / locationsPerPage)} // Disable the "Next" button on the last page
+          >
+            Next
+          </button>
         </div>
       </div>
-    </div>
-  )}
-
-  {/* User List */}
-  <div className="container mx-auto mt-10 p-5">
-    <h2>Users List</h2>
-
-    {/* Search Bar */}
-    <div className="search-bar-container mb-4">
-      <input
-        type="text"
-        placeholder="Search users..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="search-bar"
-      />
-    </div>
-
-    {/* User Table */}
-    <div className="overflow-x-auto">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Email</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Active</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredUsers.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.email}</td>
-              <td>{user.firstName}</td>
-              <td>{user.lastName}</td>
-              <td>{user.active ? "✅" : "❌"}</td>
-              <td className="action-buttons">
-                <button className="deactivate" onClick={() => handleDeactivate(user.id)}>Deactivate</button>
-                <button className="delete" onClick={() => handleDelete(user.id)}>Delete</button>
-                <button className="reset-password">Reset Password</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
     </div>
   );
 }

@@ -1,147 +1,151 @@
-/* Settings Menu Container */
 .settings-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full height */
-    padding-left: 5rem; /* Ensures it's pushed right from the sidebar */
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: 3rem;
+  padding: 0.5rem;
+  height: 100vh;
+  align-items: stretch;
 }
 
-/* Settings Menu */
-.settings-menu {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    max-width: 400px;
-    width: 100%;
-    text-align: left;
+.settings-pane {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 800px;
+  width: 100%;
+  margin: 0 10px;
 }
 
-/* Title */
-.settings-menu h2 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-}
-
-/* Settings Labels */
 .settings-label {
-    font-size: 14px;
-    font-weight: 500;
-    display: block;
-    margin-bottom: 0.5rem;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
 }
 
-/* Settings Inputs */
 .settings-input {
-    width: 100%;
-    padding: 0.6rem;
-    margin-bottom: 1.2rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.3s;
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
 .settings-input:focus {
-    border-color: #0078d4;
-    outline: none;
+  border-color: #0078d4;
 }
 
-/* Checkbox Label */
 .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 14px;
+  margin-bottom: 1rem;
 }
 
-/* Save Button */
-.save-settings-btn {
-    background-color: #0078d4;
-    color: white;
-    border: none;
-    padding: 0.5rem;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 6px;
-    width: 100%;
-    transition: background 0.3s ease-in-out;
-    margin-bottom: 1rem; /* Add space between the buttons */
+.save-settings-btn, .change-password-btn {
+  background-color: #0078d4;
+  color: white;
+  padding: 0.5rem;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  width: 100%;
+  margin-bottom: 1rem;
+  transition: background 0.3s;
 }
 
-.save-settings-btn:hover {
-    background-color: #005a9e;
+.save-settings-btn:hover, .change-password-btn:hover {
+  background-color: #005a9e;
 }
 
-/* Error Message Styling */
 .error-message {
-    color: red;
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 1rem;
-  }
-  
-  /* Change Password Button */
-  .change-password-btn {
-    background-color: #0078d4;
-    color: white;
-    border: none;
-    padding: 0.5rem;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 6px;
-    width: 100%;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .change-password-btn:hover {
-    background-color: #005a9e;
-  }
-  
-
-  /* Specific Modal Overlay for Change Password */
-.change-password-modal-overlay {
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10; /* Higher than the logout modal */
-  margin-bottom: 1rem; /* Add space between the buttons */
+  color: red;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 1rem;
 }
 
-/* Modal for the Change Password */
-.modal {
+.search-bar input {
+  width: 100%;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: #f4f4f4;
+  padding: 0.6rem;
+}
+
+.search-bar input:focus {
+  border-color: #0078d4;
+}
+
+.search-bar {
+  padding: 0rem;
+}
+
+.location-table table {
+  width: 100%;
+  /* border-collapse: collapse; */
+}
+
+.location-table th, .location-table td {
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  color: #000;
+}
+
+.location-table th {
+  background-color: #f4f4f4;
+}
+
+.location-table td {
   background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
-  z-index: 20;
 }
 
-/* Modal Overlay for Logout */
-.modal-overlay {
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.delete {
+  background-color: #d9534f;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete:hover {
+  background-color: #c9302c;
+}
+
+.pagination-controls {
   display: flex;
   justify-content: center;
-  align-items: center;
-  z-index: 5; /* Lower than the change password modal */
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
+.pagination-btn {
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #005a9e;
+}
+
+.page-number {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
