@@ -1,22 +1,27 @@
 import './login.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import logo from "../../../assets/logo.png";
 
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [error, setError] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Dummy authentication logic
-    if (email === 'admin@example.com' && password === 'password') {
-      navigate('/home');
-    } else {
-      alert('Invalid credentials');
-    }
+    const user = { email, password };
+    login(user.email, user.password)
+      .then(() => {
+        navigate('/home');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        // setError('Invalid email or password');
+      });
   };
 
   return (    

@@ -122,3 +122,18 @@ button {
 .modal-btn.confirm:hover {
     background-color: #005a9e;
 }
+
+.user-info {
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: left;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s;
+    display: block;
+    width: 95%;
+    font-family: inherit;
+}

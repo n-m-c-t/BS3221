@@ -9,30 +9,33 @@ import Error from "./screens/error/error";
 import Layout from './layouts/layout/layout';
 import Unauthorised from './screens/unauthorised/unauthorised'
 import Audit from "./screens/audit/audit";
+import { AuthContextProvider } from "./contexts/AuthContext";
 
 export function App() {
   return (
-    <Routes>
-      {/* Redirect root to login page */}
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      
-      {/* Routes that do not need the sidebar */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/error" element={<Error />} />
-        <Route path="/unauthorised" element={<Unauthorised />} />
-      
-      {/* Protected routes that need the sidebar */}
-      <Route element={<Layout />}>
-        <Route path="/home" element={<Home />} />
-        <Route path="/submission" element={<Submission />} />
-        <Route path="/audit" element={<Audit />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/settings" element={<Settings />} />
-      </Route>
+    <AuthContextProvider>
+      <Routes>
+        {/* Redirect root to login page */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        
+        {/* Routes that do not need the sidebar */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/error" element={<Error />} />
+          <Route path="/unauthorised" element={<Unauthorised />} />
+        
+        {/* Protected routes that need the sidebar */}
+        <Route element={<Layout />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/submission" element={<Submission />} />
+          <Route path="/audit" element={<Audit />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/settings" element={<Settings />} />
+        </Route>
 
-      {/* Catch-all route for errors */}
-      <Route path="*" element={<Error />} />
-    </Routes>
+        {/* Catch-all route for errors */}
+        <Route path="*" element={<Error />} />
+      </Routes>
+    </AuthContextProvider>
   );
 }
 

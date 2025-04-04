@@ -2,10 +2,13 @@ import { memo, useState, useCallback } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import "./sidenav.css";
 import logo from "../../../assets/logo.png";
+import { useAuth } from "../../contexts/AuthContext";
 
 const SideNav: React.FC = memo(() => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate(); // <-- Get the navigate function
+
+  const { user, logout } = useAuth();
 
   // Memoize the function to open the modal
   const handleLogout = useCallback(() => {
@@ -19,7 +22,7 @@ const SideNav: React.FC = memo(() => {
 
   // Handle logout confirmation
   const handleConfirmLogout = useCallback(() => {
-    // Perform logout logic (e.g., clearing authentication data)
+    logout()
     navigate('/login'); // <-- Use navigate to redirect to login page
   }, [navigate]); // Dependency on navigate (though it doesn't change)
 
@@ -32,6 +35,8 @@ const SideNav: React.FC = memo(() => {
           {page.charAt(0).toUpperCase() + page.slice(1)}
         </Link>
       ))}
+
+      <p className="user-info">Logged in as:<br />{user?.firstName} {user?.lastName}</p>
 
       {/* Logout Button */}
       <button className="logout-btn" onClick={handleLogout}>Logout</button>
