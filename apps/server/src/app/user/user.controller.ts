@@ -38,4 +38,19 @@ export class UserController {
     return this.userService.deactivateUser(Number(id));
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/activate')
+  async activateUser(@Param('id') id: number): Promise<User> {
+    return this.userService.activateUser(Number(id));
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/password')
+  async updatePassword(
+    @Param('id') id: number,
+    @Body() body: { current: string, newPass: string }
+  ): Promise<string> {
+    return this.userService.updatePassword(Number(id), body.current, body.newPass);
+  }
+  
 }

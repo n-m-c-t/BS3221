@@ -40,5 +40,27 @@ export class UserService {
     user.active = false; // Set active status to false
     return this.userRepository.save(user); // Save the updated user
   }
+  
+  async activateUser(id: number): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+  
+    if (!user) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+  
+    user.active = true; // Set active status to false
+    return this.userRepository.save(user); // Save the updated user
+  }
+
+  async updatePassword(id: number, current: string, newPass: string): Promise<string> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) throw new Error("User not found");
+
+    if (user.password !== current) throw new Error("Incorrect current password");
+
+    user.password = newPass;
+    await this.userRepository.save(user);
+    return "Password updated";
+  }
 
 }

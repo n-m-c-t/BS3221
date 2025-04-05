@@ -8,7 +8,7 @@ const SideNav: React.FC = memo(() => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate(); // <-- Get the navigate function
 
-  const { user, logout } = useAuth();
+  const { user, hasRole, logout } = useAuth();
 
   // Memoize the function to open the modal
   const handleLogout = useCallback(() => {
@@ -27,14 +27,19 @@ const SideNav: React.FC = memo(() => {
   }, [navigate]); // Dependency on navigate (though it doesn't change)
 
   return (
-    <div className="sidenav bg-gray-800 text-white w-64 h-screen p-4 flex flex-col fixed left-0 top-0">
+    <div className="sidenav">
       <img src={logo} alt="Logo" className="logo" />
-      {/* Sidebar Links */}
-      {["home", "submission", "audit", "users", "settings"].map((page) => (
-        <Link key={page} to={`/${page}`} className="py-2 hover:bg-gray-700 block">
-          {page.charAt(0).toUpperCase() + page.slice(1)}
-        </Link>
-      ))}
+      <div className="sidenav-links">
+        <Link to="/home">Home</Link>
+        <Link to="/submission">Submission</Link>
+        {hasRole("admin") && (
+          <>
+            <Link to="/audit">Audit</Link>
+            <Link to="/users">Users</Link>
+          </>
+        )}
+        <Link to="/settings">Settings</Link>
+      </div>
 
       <p className="user-info">Logged in as:<br />{user?.firstName} {user?.lastName}</p>
 
