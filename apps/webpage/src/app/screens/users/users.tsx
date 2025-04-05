@@ -2,6 +2,7 @@ import "./users.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/logo.png";
+import API from '../../axiosInstance'; // Assuming this is your axios instance
 
 interface User {
   id: number;
@@ -21,52 +22,45 @@ export function Users() {
 
   const handleDeactivate = async (userId: number) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/users/${userId}/deactivate`, {
-        method: "PATCH",
-      });
-  
-      if (!response.ok) {
+      const response = await API.patch(`/users/${userId}/deactivate`);
+      if (response?.status !== 200) {
         throw new Error("Failed to deactivate user");
       }
-  
+      
       // Update state to reflect the change
-      setUsers(users.map(user => 
+      setUsers(users.map(user =>
         user.id === userId ? { ...user, active: false } : user
       ));
     } catch (error) {
       console.error("Error deactivating user:", error);
+      setError("Error deactivating user.");
     }
   };
-  
+
   const handleDelete = async (userId: number) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
-        method: "DELETE",
-      });
-  
-      if (!response.ok) {
+      const response = await API.delete(`/users/${userId}`);
+      if (response?.status !== 200) {
         throw new Error("Failed to delete user");
       }
-  
+
       // Remove the user from state
       setUsers(users.filter(user => user.id !== userId));
     } catch (error) {
       console.error("Error deleting user:", error);
+      setError("Error deleting user.");
     }
   };
 
   useEffect(() => {
-
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/users");
-
-        if (!response.ok) {
+        const response = await API.get("/users");
+        if (response?.status !== 200) {
           throw new Error("Failed to fetch users");
         }
 
-        const data = await response.json();
-        setUsers(data);
+        setUsers(response.data);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -75,7 +69,6 @@ export function Users() {
     };
 
     fetchUsers();
-
   }, []);
 
   if (loading) return <p>Loading users...</p>;
@@ -116,9 +109,8 @@ export function Users() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button className="create-user"
-          // onClick={() => handlePageChange(currentPage - 1)} 
-        >Create User
+        <button className="create-user">
+          Create User
         </button>
       </div>
 
@@ -167,7 +159,7 @@ export function Users() {
           </span>
           <button 
             className="pagination-btn"
-            // // onClick={() => handlePageChange(currentPage + 1)} 
+            // onClick={() => handlePageChange(currentPage + 1)} 
             // disabled={currentPage === Math.ceil(filteredLocations.length / locationsPerPage)} // Disable the "Next" button on the last page
           >
             Next

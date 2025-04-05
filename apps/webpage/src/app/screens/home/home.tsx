@@ -8,8 +8,16 @@ export function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex h-screen">
-        <h1 className="text-3xl font-bold">Home screen</h1>
+    <div className="home-screen-container">
+        <div className="home-screen-pane">
+          <h3>HOME SCREEN PANE</h3>
+        </div>
+        <div className="home-screen-pane">
+          <h3>HOME SCREEN PANE 2</h3>
+        </div>
+        <div className="home-screen-pane">
+          <h3>HOME SCREEN PANE 3</h3>
+        </div>                
     </div>
   );
 }
