@@ -26,8 +26,6 @@ export function App() {
           <Route element={<Layout />}>
             <Route path="/home" element={<Home />} />
             <Route path="/submission" element={<Submission />} />
-            {/* <Route path="/audit" element={<Audit />} /> */}
-            {/* <Route path="/users" element={<Users />} /> */}
             <Route path="/settings" element={<Settings />} />
           </Route>
         </Route>
