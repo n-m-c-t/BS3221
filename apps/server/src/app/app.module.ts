@@ -13,6 +13,9 @@
   import { Location } from './location/location.entity';
   import { LocationService } from './location/location.service';
   import { LocationController } from './location/location.controller';
+  import { Submission } from './submission/submission.entity';
+  import { SubmissionController } from './submission/submission.controller';
+  import { SubmissionService } from './submission/submission.service';
   import { AuthController } from './auth/auth.controller';
   import { AuthService } from './auth/auth.service';
   // import { Admin } from 'typeorm';
@@ -35,14 +38,14 @@
       password: 'password',
       // database: 'DB_NAME',
       database: 'mydb',
-      entities: [User, Role, Location],
+      entities: [User, Role, Location, Submission],
       synchronize: true, // Set this to false in production
     }),
 
-      TypeOrmModule.forFeature([User, Role, Location]), // Add User to the feature
+      TypeOrmModule.forFeature([User, Role, Location, Submission]),
     ],
-    controllers: [UserController, LocationController, AuthController],
-    providers: [UserService, LocationService, JwtStrategy, JwtAuthGuard, AuthService],
+    controllers: [UserController, LocationController, SubmissionController, AuthController],
+    providers: [UserService, LocationService, SubmissionService, JwtStrategy, JwtAuthGuard, AuthService],
   })
 
   export class AppModule {}
