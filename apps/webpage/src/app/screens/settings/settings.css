@@ -207,6 +207,7 @@
 .modal-actions button.save-settings-btn {
   background-color: #4CAF50;
   color: white;
+  font-size: small;
 }
 
 .modal-actions button.save-settings-btn:hover {
