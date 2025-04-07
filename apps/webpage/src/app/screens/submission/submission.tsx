@@ -19,7 +19,7 @@ interface Location {
 }
 
 export function Submission() {
-  const { user } = useAuth(); // Access the user from AuthContext
+  const { user } = useAuth();
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
   const [showModal, setShowModal] = useState(false);
@@ -49,8 +49,10 @@ export function Submission() {
   const handleEditSubmission = (submission: Submission) => {
     setCurrentSubmissionId(submission.id);
     setLocationID(submission.location.id);
-    const entryTime = new Date(submission.entryTime).toISOString().split('T')[1].slice(0, 5); // Extract only time
-    const exitTime = submission.exitTime ? new Date(submission.exitTime).toISOString().split('T')[1].slice(0, 5) : ''; // Set exit time if available
+    const entryTime = new Date(submission.entryTime).toISOString().split('T')[1].slice(0, 5);
+    const exitTime = submission.exitTime
+      ? new Date(submission.exitTime).toISOString().split('T')[1].slice(0, 5)
+      : '';
     setStartTime(entryTime);
     setEndTime(exitTime);
     setShowModal(true);
@@ -62,22 +64,25 @@ export function Submission() {
       return;
     }
 
+    if (!locationID || !startTime) {
+      console.error("Please fill in all the fields.");
+      return;
+    }
+
+    if (currentSubmissionId === null) {
+      console.error("No submission selected for editing.");
+      return;
+    }
+
+    const currentDate = new Date().toISOString().split('T')[0];
+    const entryDateTime = `${currentDate}T${startTime}:00`;
+    const exitDateTime = endTime ? `${currentDate}T${endTime}:00` : null;
+
     try {
-      if (!locationID || !startTime) {
-        console.error("Please fill in all the fields.");
-        return;
-      }
-
-      // Get current date and time for entry
-      const currentDate = new Date().toISOString().split('T')[0]; // Only get date
-      const entryDateTime = `${currentDate}T${startTime}:00`;
-      const exitDateTime = endTime ? `${currentDate}T${endTime}:00` : null;
-
       const response = await API.patch(`/submissions/${currentSubmissionId}`, {
-        userId: user.id,  // Pass userId from AuthContext
-        locationId: locationID,
-        entryTime: entryDateTime,  // Use selected start time with current date
-        exitTime: exitDateTime,    // Set exit time if provided
+        locationID,
+        entryTime: entryDateTime,
+        exitTime: exitDateTime,
       });
 
       if (response.status === 200) {
@@ -86,7 +91,7 @@ export function Submission() {
         setStartTime('');
         setEndTime('');
         setCurrentSubmissionId(null);
-        fetchSubmissions();  // Refresh the submission list after saving changes
+        fetchSubmissions();
       }
     } catch (error) {
       console.error("Error saving submission:", error);
@@ -98,11 +103,11 @@ export function Submission() {
 
     try {
       const response = await API.patch(`/submissions/${submissionId}`, {
-        exitTime: currentDateTime,  // Set exitTime to current time
+        exitTime: currentDateTime,
       });
 
       if (response.status === 200) {
-        fetchSubmissions();  // Refresh submission list after ending session
+        fetchSubmissions();
       }
     } catch (error) {
       console.error("Error ending session:", error);
@@ -135,11 +140,19 @@ export function Submission() {
                 <td>{submission.id}</td>
                 <td>{submission.location.name}</td>
                 <td>{new Date(submission.entryTime).toLocaleString()}</td>
-                <td>{submission.exitTime ? new Date(submission.exitTime).toLocaleString() : "Not ended yet"}</td>
                 <td>
-                  <button onClick={() => handleEditSubmission(submission)}>Edit</button>
+                  {submission.exitTime
+                    ? new Date(submission.exitTime).toLocaleString()
+                    : "Not ended yet"}
+                </td>
+                <td>
+                  <button onClick={() => handleEditSubmission(submission)}>
+                    Edit
+                  </button>
                   {submission.exitTime === submission.entryTime && (
-                    <button onClick={() => handleEndSession(submission.id)}>End Session</button>
+                    <button onClick={() => handleEndSession(submission.id)}>
+                      End Session
+                    </button>
                   )}
                 </td>
               </tr>
@@ -151,7 +164,7 @@ export function Submission() {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <h4>{currentSubmissionId ? "Edit Submission" : "Edit Submission"}</h4>
+            <h4>Edit Submission</h4>
             <select
               value={locationID || ""}
               onChange={(e) => setLocationID(Number(e.target.value))}

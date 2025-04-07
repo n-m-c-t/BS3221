@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Submission } from './submission.entity';
 import { CreateSubmissionDto } from './dto/create.submission.dto';
+import { UpdateSubmissionDto } from './dto/update.submission.dto';
 import { User } from '../user/user.entity';
 import { Location } from '../location/location.entity';
 
@@ -40,4 +41,25 @@ export class SubmissionService {
       where: { user: { id: userID } },
     });
   }
+
+  async update(id: number, updateDto: UpdateSubmissionDto): Promise<Submission> {
+    const submission = await this.submissionRepo.findOne({
+      where: { id },
+      relations: ['user', 'location'],
+    });
+  
+    if (!submission) throw new Error('Submission not found');
+  
+    if (updateDto.entryTime) submission.entryTime = updateDto.entryTime;
+    if (updateDto.exitTime) submission.exitTime = updateDto.exitTime;
+  
+    if (updateDto.locationID) {
+      const location = await this.locationRepo.findOne({ where: { id: updateDto.locationID } });
+      if (!location) throw new Error('Invalid location');
+      submission.location = location;
+    }
+  
+    return this.submissionRepo.save(submission);
+  }
+  
 }
