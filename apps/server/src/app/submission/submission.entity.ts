@@ -11,8 +11,8 @@ export class Submission {
   @Column()
   entryTime: Date;
 
-  @Column({ nullable: true })
-  exitTime?: Date;
+  @Column()
+  exitTime: Date;
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'userId' })
