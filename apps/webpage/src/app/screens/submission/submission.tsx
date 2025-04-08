@@ -30,11 +30,12 @@ export function Submission() {
   const [endTime, setEndTime] = useState<string>('');
   const [currentSubmissionId, setCurrentSubmissionId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [submissionsPerPage] = useState(7);
+  const [submissionsPerPage] = useState(10);
 
   const fetchSubmissions = async () => {
     try {
-      const response = await API.get("/submissions");
+      // Fetch submissions for the current user
+      const response = await API.get(`/submissions/user/${user?.id}`);
       setSubmissions(response.data);
     } catch (error) {
       console.error("Error fetching submissions:", error);
@@ -95,26 +96,10 @@ export function Submission() {
         setStartTime('');
         setEndTime('');
         setCurrentSubmissionId(null);
-        fetchSubmissions();
+        fetchSubmissions();  // Fetch updated submissions after save
       }
     } catch (error) {
       console.error("Error saving submission:", error);
-    }
-  };
-
-  const handleEndSession = async (submissionId: number) => {
-    const currentDateTime = new Date().toISOString();
-
-    try {
-      const response = await API.patch(`/submissions/${submissionId}`, {
-        exitTime: currentDateTime,
-      });
-
-      if (response.status === 200) {
-        fetchSubmissions();
-      }
-    } catch (error) {
-      console.error("Error ending session:", error);
     }
   };
 
@@ -128,9 +113,11 @@ export function Submission() {
   };
 
   useEffect(() => {
-    fetchSubmissions();
-    fetchLocations();
-  }, []);
+    if (user) {
+      fetchSubmissions();
+      fetchLocations();
+    }
+  }, [user]);
 
   return (
     <div className="submission-screen-container">
@@ -156,23 +143,18 @@ export function Submission() {
                 <td>
                   {submission.exitTime
                     ? new Date(submission.exitTime).toLocaleString()
-                    : "Not ended yet"}
+                    : "On-going session"}
                 </td>
                 <td>
                   <button onClick={() => handleEditSubmission(submission)}>
                     Edit
                   </button>
-                  {submission.exitTime === submission.entryTime && (
-                    <button onClick={() => handleEndSession(submission.id)}>
-                      End Session
-                    </button>
-                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        
+
         {/* Pagination Controls */}
         <div className="pagination-controls">
           <button 
