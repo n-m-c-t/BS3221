@@ -1,7 +1,8 @@
 import "./submission.css";
-import React, { useEffect, useState } from "react";
 import API from "../../axiosInstance";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface Submission {
   id: number;
@@ -20,6 +21,7 @@ interface Location {
 
 export function Submission() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
   const [showModal, setShowModal] = useState(false);
@@ -27,6 +29,8 @@ export function Submission() {
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
   const [currentSubmissionId, setCurrentSubmissionId] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [submissionsPerPage] = useState(7);
 
   const fetchSubmissions = async () => {
     try {
@@ -114,6 +118,15 @@ export function Submission() {
     }
   };
 
+  // Pagination logic
+  const indexOfLastSubmission = currentPage * submissionsPerPage;
+  const indexOfFirstSubmission = indexOfLastSubmission - submissionsPerPage;
+  const currentSubmissions = submissions.slice(indexOfFirstSubmission, indexOfLastSubmission);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   useEffect(() => {
     fetchSubmissions();
     fetchLocations();
@@ -135,7 +148,7 @@ export function Submission() {
             </tr>
           </thead>
           <tbody>
-            {submissions.map((submission) => (
+            {currentSubmissions.map((submission) => (
               <tr key={submission.id}>
                 <td>{submission.id}</td>
                 <td>{submission.location.name}</td>
@@ -159,6 +172,27 @@ export function Submission() {
             ))}
           </tbody>
         </table>
+        
+        {/* Pagination Controls */}
+        <div className="pagination-controls">
+          <button 
+            className="pagination-btn"
+            onClick={() => handlePageChange(currentPage - 1)} 
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span className="page-number">
+            Page {currentPage} of {Math.ceil(submissions.length / submissionsPerPage)}
+          </span>
+          <button 
+            className="pagination-btn"
+            onClick={() => handlePageChange(currentPage + 1)} 
+            disabled={currentPage === Math.ceil(submissions.length / submissionsPerPage)}
+          >
+            Next
+          </button>
+        </div>
       </div>
 
       {showModal && (

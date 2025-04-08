@@ -1,4 +1,4 @@
-.home-screen-container {
+/* .home-screen-container {
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -16,4 +16,74 @@
     max-width: 800px;
     width: 100%;
     margin: 0 10px;
-}
+} */
+
+.home-screen-container {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+  }
+  
+  .home-screen-pane {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease;
+  }
+  
+  .home-screen-pane h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .home-screen-pane select {
+    padding: 0.5rem;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .home-screen-pane p {
+    font-size: 14px;
+    color: #555;
+    margin: 0.5rem 0;
+  }
+  
+  .home-screen-pane button {
+    background-color: #0078d4;
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .home-screen-pane button:hover {
+    background-color: #005a9e;
+  }
+  
+  /* Responsive behavior */
+  @media (max-width: 768px) {
+    .home-screen-container {
+      padding: 1rem;
+    }
+  
+    .home-screen-pane {
+      padding: 1rem;
+    }
+  }
+  
