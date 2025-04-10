@@ -35,7 +35,7 @@
       // username: 'DB_USER',
       username: 'root',
       // password: 'DB_PASS',
-      password: 'root',
+      password: 'password',
       // database: 'DB_NAME',
       database: 'mydb',
       entities: [User, Role, Location, Submission],

@@ -31,7 +31,9 @@ const SideNav: React.FC = memo(() => {
       <img src={logo} alt="Logo" className="logo" />
       <div className="sidenav-links">
         <Link to="/home">Home</Link>
-        <Link to="/submission">Submission</Link>
+        {hasRole("user") && (
+          <Link to="/submission">Submissions</Link>
+        )}        
         {hasRole("admin") && (
           <>
             <Link to="/audit">Audit</Link>

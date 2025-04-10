@@ -20,7 +20,7 @@ export function Settings() {
   const [locationsPerPage] = useState(7);
 
   const navigate = useNavigate();
-  const { user, hasRole } = useAuth(); // ✅ get user and role from context
+  const { user, hasRole } = useAuth();
 
   // Fetch all locations
   const fetchLocations = async () => {

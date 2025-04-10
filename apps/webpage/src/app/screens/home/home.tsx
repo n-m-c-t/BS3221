@@ -6,7 +6,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 
 export function Home() {
-  const { user } = useAuth();
+  const { user, hasRole} = useAuth();
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [activeSession, setActiveSession] = useState(null);
@@ -67,33 +67,35 @@ export function Home() {
   return (
     <div className="home-screen-container">
       {/* New Submission Panel */}
-      <div className="home-screen-pane">
-        <h3>New Submission Panel</h3>
-        {!activeSession ? (
-          <>
-            <select
-              value={selectedLocation}
-              onChange={(e) => setSelectedLocation(e.target.value)}
-            >
-              <option value="">Select Location</option>
-              {locations.map((loc) => (
-                <option key={loc.id} value={loc.id}>
-                  {loc.name}
-                </option>
-              ))}
-            </select>
-            <button onClick={handleStartSession}>Start Session</button>
-          </>
-        ) : (
-          <>
-            <p>
-              Active session at: <strong>{activeSession.location.name}</strong>
-            </p>
-            <p>Started: {new Date(activeSession.entryTime).toLocaleString()}</p>
-            <button onClick={handleEndSession}>End Session</button>
-          </>
-        )}
-      </div>
+      {hasRole("user") && (
+        <div className="home-screen-pane">
+          <h3>New Submission Panel</h3>
+          {!activeSession ? (
+            <>
+              <select
+                value={selectedLocation}
+                onChange={(e) => setSelectedLocation(e.target.value)}
+              >
+                <option value="">Select Location</option>
+                {locations.map((loc) => (
+                  <option key={loc.id} value={loc.id}>
+                    {loc.name}
+                  </option>
+                ))}
+              </select>
+              <button onClick={handleStartSession}>Start Session</button>
+            </>
+          ) : (
+            <>
+              <p>
+                Active session at: <strong>{activeSession.location.name}</strong>
+              </p>
+              <p>Started: {new Date(activeSession.entryTime).toLocaleString()}</p>
+              <button onClick={handleEndSession}>End Session</button>
+            </>
+          )}
+        </div>
+      )}
 
       {/* Placeholder panels */}
       <div className="home-screen-pane">
