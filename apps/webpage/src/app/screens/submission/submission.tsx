@@ -54,11 +54,22 @@ export function Submission() {
   const handleEditSubmission = (submission: Submission) => {
     setCurrentSubmissionId(submission.id);
     setLocationID(submission.location.id);
-    const entryTime = new Date(submission.entryTime).toISOString().split('T')[1].slice(0, 5);
+    // Convert the UTC entryTime to local time
+    const entryTime = new Date(submission.entryTime);
+    const entryLocalTime = entryTime.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).slice(0, 5); // Format the time to match the <input type="time"> format
+
     const exitTime = submission.exitTime
-      ? new Date(submission.exitTime).toISOString().split('T')[1].slice(0, 5)
+      ? new Date(submission.exitTime).toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        }).slice(0, 5)
       : '';
-    setStartTime(entryTime);
+    setStartTime(entryLocalTime);
     setEndTime(exitTime);
     setShowModal(true);
   };
@@ -79,10 +90,11 @@ export function Submission() {
       return;
     }
 
+    // Convert local time back to UTC for entryTime and exitTime
     const currentDate = new Date().toISOString().split('T')[0];
-    const entryDateTime = `${currentDate}T${startTime}:00`;
-    const exitDateTime = endTime ? `${currentDate}T${endTime}:00` : null;
-
+    const entryDateTime = new Date(`${currentDate}T${startTime}:00`).toISOString(); // Convert to UTC
+    const exitDateTime = endTime ? new Date(`${currentDate}T${endTime}:00`).toISOString() : null;
+  
     try {
       const response = await API.patch(`/submissions/${currentSubmissionId}`, {
         locationID,

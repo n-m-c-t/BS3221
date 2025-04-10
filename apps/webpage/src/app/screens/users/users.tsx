@@ -100,7 +100,6 @@ export function Users() {
       const response = await API.post('/users', userToCreate);
       if (response.status === 201) {
         setShowCreateUserModal(false);
-        console.log("User created:", userToCreate);
         setNewUser({
           email: '',
           firstName: '',

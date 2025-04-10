@@ -49,13 +49,19 @@ export function Settings() {
     }
   };
 
-  const handleDeleteLocation = async (id: number) => {
-    try {
-      await API.delete(`/locations/${id}`);
-      setLocations(locations.filter(location => location.id !== id));
-    } catch (error) {
-      console.error("Error deleting location:", error);
-      setErrorMessage("Error deleting location.");
+  // settings.tsx (or wherever you're handling deletion)
+  const handleDeleteLocation = async (locationId: number) => {
+    if (window.confirm('Are you sure you want to delete this location?')) {
+      try {
+        const response = await API.delete(`/locations/${locationId}`);
+        const { affectedSessions } = response.data;
+        alert(`Location deleted successfully! ${affectedSessions} session(s) affected.`);
+        // Optionally refresh the locations list or update the UI
+      } catch (error) {
+        console.error('Error deleting location:', error);
+        alert('An error occurred while deleting the location.');
+      }
+    fetchLocations()
     }
   };
 

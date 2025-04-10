@@ -1,10 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Submission } from '../submission/submission.entity';
 
 @Entity()
 export class Location {
-  @PrimaryGeneratedColumn()  // auto-incrementing ID
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column()
   name: string;
+
+  @OneToMany(() => Submission, (submission) => submission.location, { onDelete: 'CASCADE' })
+  submissions: Submission[];
 }

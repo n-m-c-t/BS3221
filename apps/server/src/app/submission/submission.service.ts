@@ -1,4 +1,3 @@
-// src/submission/submission.service.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -33,8 +32,8 @@ export class SubmissionService {
   }
 
   async findAll(): Promise<Submission[]> {
-    return this.submissionRepo.find();
-  }
+    return this.submissionRepo.find({ relations: ['user', 'location'] });
+  }  
 
   async findByUser(userID: number): Promise<Submission[]> {
     return this.submissionRepo.find({

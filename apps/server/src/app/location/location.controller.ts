@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { LocationService } from './location.service';
 import { Location } from './location.entity';
 import { JwtAuthGuard } from '../guards/jwt-auth-guards';
@@ -6,7 +6,7 @@ import { UseGuards } from '@nestjs/common';
 
 @Controller('locations')
 export class LocationController {
-  constructor(private locationService: LocationService) {}
+  constructor(private readonly locationService: LocationService) {}
 
   // Get all locations
   @UseGuards(JwtAuthGuard)
@@ -32,7 +32,16 @@ export class LocationController {
   // Delete a location by ID
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async deleteLocation(@Param('id') id: number): Promise<void> {
-    await this.locationService.deleteLocation(id);
-  }
+  async deleteLocation(@Param('id') id: number): Promise<{ message: string }> {
+    const result = await this.locationService.deleteLocation(id);
+
+    if (result.affectedSessions > 0) {
+      throw new HttpException(
+        `Cannot delete location, it is associated with ${result.affectedSessions} active session(s).`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    
+    return { message: 'Location deleted successfully' };  }
+  
 }
