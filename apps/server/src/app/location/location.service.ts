@@ -28,25 +28,12 @@ export class LocationService {
   }
 
   // Delete a location by ID
-
-  async deleteLocation(id: number): Promise<{ affectedSessions: number }> {
-    // Check if any submission is using this location
-    const submissions = await this.sessionRepository.find({
-      where: {
-        location: { id }, // Reference the location's id, not locationId
-      },
-    });
-  
-    // If there are active sessions (submissions), return the number of affected sessions
-    if (submissions.length > 0) {
-      return { affectedSessions: submissions.length };
+  async deleteLocation(id: number): Promise<void> {
+    const result = await this.locationRepository.delete(id);
+    if (result.affected === 0) {
+      throw new Error(`Location with ID ${id} not found`);
     }
-  
-    // Proceed with deletion if no active sessions
-    await this.locationRepository.delete(id);
-  
-    // Return a success response
-    return { affectedSessions: 0 }; // No sessions were affected
+
   }  
-  
+
 }

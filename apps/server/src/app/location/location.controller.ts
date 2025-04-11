@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Delete } from '@nestjs/common';
 import { LocationService } from './location.service';
 import { Location } from './location.entity';
 import { JwtAuthGuard } from '../guards/jwt-auth-guards';
@@ -30,11 +30,16 @@ export class LocationController {
   }
 
   // Delete a location by ID
+  // @UseGuards(JwtAuthGuard)
+  // @Delete(':id')
+  // async deleteLocation(@Param('id') id: number): Promise<{ message: string }> {
+  //   await this.locationService.deleteLocation(id);
+  //   return { message: `Location ${id} deleted.` };
+  // }
+
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async deleteLocation(@Param('id') id: number): Promise<{ message: string }> {
-    await this.locationService.deleteLocation(id);
-    return { message: `Location ${id} deleted.` };
+  async deleteLocation(@Param('id') id: number): Promise<void> {
+    return this.locationService.deleteLocation(Number(id));
   }
-
 }

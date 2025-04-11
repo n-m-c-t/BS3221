@@ -149,26 +149,22 @@ export function Home() {
 
       {/* Placeholder Panel 2 */}
       <div className="home-screen-pane">
-        <h3>HOME SCREEN PANE 2</h3>
+        <h3>Location Coverage:</h3>
+          <ul>
+            {locationsWithCoverage.map((loc, index) => (
+              <li key={index}>
+                {loc.name} - {loc.isCovered ? "✅" : "❌"}
+              </li>
+            ))}
+          </ul>
       </div>
 
       {/* Panel 3 - Overview */}
       <div className="home-screen-pane">
         <h3>Active Session Overview</h3>
-
         <p>
           <strong>Locations Covered:</strong> {activeLocationCount}/{totalLocationCount}
         </p>
-
-        <p><strong>Location Coverage:</strong></p>
-        <ul>
-          {locationsWithCoverage.map((loc, index) => (
-            <li key={index}>
-              {loc.name} - {loc.isCovered ? "✅" : "❌"}
-            </li>
-          ))}
-        </ul>
-
         <p>
           <strong>Fire Wardens with active sessions:</strong> {activeUsersCount}/{totalWardenCount}
         </p>
