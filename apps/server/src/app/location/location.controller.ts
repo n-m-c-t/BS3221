@@ -33,15 +33,8 @@ export class LocationController {
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async deleteLocation(@Param('id') id: number): Promise<{ message: string }> {
-    const result = await this.locationService.deleteLocation(id);
+    await this.locationService.deleteLocation(id);
+    return { message: `Location ${id} deleted.` };
+  }
 
-    if (result.affectedSessions > 0) {
-      throw new HttpException(
-        `Cannot delete location, it is associated with ${result.affectedSessions} active session(s).`,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-    
-    return { message: 'Location deleted successfully' };  }
-  
 }

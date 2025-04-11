@@ -1,5 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Submission } from '../submission/submission.entity';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Location {
@@ -9,6 +8,4 @@ export class Location {
   @Column()
   name: string;
 
-  @OneToMany(() => Submission, (submission) => submission.location, { onDelete: 'CASCADE' })
-  submissions: Submission[];
 }
