@@ -21,12 +21,10 @@ export class UserService {
   async createUser(userData: Partial<User>): Promise<User> {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
-
     const user = this.userRepository.create({
       ...userData,
       password: hashedPassword,
     });
-
     return this.userRepository.save(user);
   }
 
@@ -61,14 +59,29 @@ export class UserService {
   }
 
   async updatePassword(id: number, current: string, newPass: string): Promise<string> {
+    // const user = await this.userRepository.findOne({ where: { email } });
+  
+    // if (!user) {
+    //   throw new Error('Invalid credentials');
+    // }
+  
+    // const isPasswordValid = await bcrypt.compare(password, user.password);
+    // if (!isPasswordValid) {
+    //   throw new Error('Invalid credentials');
+    // }
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new Error("User not found");
 
-    if (user.password !== current) throw new Error("Incorrect current password");
-
-    user.password = newPass;
+    const isMatch = await bcrypt.compare(current, user.password);
+    if (!isMatch) {
+      throw new Error("Incorrect current password");
+    }
+    const saltRounds = 10;
+    const hashedNewPassword = await bcrypt.hash(newPass, saltRounds);
+  
+    user.password = hashedNewPassword;
     await this.userRepository.save(user);
+  
     return "Password updated";
   }
-
 }
