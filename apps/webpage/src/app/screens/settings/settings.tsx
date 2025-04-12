@@ -20,7 +20,7 @@ export function Settings() {
   const [locationsPerPage] = useState(7);
 
   const navigate = useNavigate();
-  const { user, hasRole } = useAuth(); // ✅ get user and role from context
+  const { user, hasRole } = useAuth();
 
   // Fetch all locations
   const fetchLocations = async () => {
@@ -49,13 +49,17 @@ export function Settings() {
     }
   };
 
-  const handleDeleteLocation = async (id: number) => {
-    try {
-      await API.delete(`/locations/${id}`);
-      setLocations(locations.filter(location => location.id !== id));
-    } catch (error) {
-      console.error("Error deleting location:", error);
-      setErrorMessage("Error deleting location.");
+  const handleDeleteLocation = async (locationId: number) => {
+    if (window.confirm('Are you sure you want to delete this location?')) {
+      try {
+        const response = await API.delete(`/locations/${locationId}`);
+        const data = await response.data;      
+        alert(data.message || 'Location deleted successfully!');
+        fetchLocations();
+      } catch (error: any) {
+        console.error('Error deleting location:', error);
+        alert('An error occurred while deleting the location.');
+      }
     }
   };
 

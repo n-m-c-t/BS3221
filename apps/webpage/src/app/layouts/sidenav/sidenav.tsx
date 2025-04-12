@@ -31,7 +31,9 @@ const SideNav: React.FC = memo(() => {
       <img src={logo} alt="Logo" className="logo" />
       <div className="sidenav-links">
         <Link to="/home">Home</Link>
-        <Link to="/submission">Submission</Link>
+        {hasRole("user") && (
+          <Link to="/submission">Submissions</Link>
+        )}        
         {hasRole("admin") && (
           <>
             <Link to="/audit">Audit</Link>
@@ -42,7 +44,6 @@ const SideNav: React.FC = memo(() => {
       </div>
 
       <p className="user-info">Logged in as:<br />{user?.firstName} {user?.lastName}</p>
-
       {/* Logout Button */}
       <button className="logout-btn" onClick={handleLogout}>Logout</button>
 
