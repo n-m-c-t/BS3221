@@ -44,7 +44,6 @@ const SideNav: React.FC = memo(() => {
       </div>
 
       <p className="user-info">Logged in as:<br />{user?.firstName} {user?.lastName}</p>
-
       {/* Logout Button */}
       <button className="logout-btn" onClick={handleLogout}>Logout</button>
 

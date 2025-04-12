@@ -59,16 +59,6 @@ export class UserService {
   }
 
   async updatePassword(id: number, current: string, newPass: string): Promise<string> {
-    // const user = await this.userRepository.findOne({ where: { email } });
-  
-    // if (!user) {
-    //   throw new Error('Invalid credentials');
-    // }
-  
-    // const isPasswordValid = await bcrypt.compare(password, user.password);
-    // if (!isPasswordValid) {
-    //   throw new Error('Invalid credentials');
-    // }
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new Error("User not found");
 

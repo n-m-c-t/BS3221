@@ -139,6 +139,21 @@
     background-color: #005a9e;
   }
   
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .action-btn.edit {
+    background-color: #ffcc00;
+    color: #333;
+  }
+  
+  .action-btn.edit:hover {
+    background-color: #e6b800;
+  }
+  
   /* Adjustments for smaller screens */
   @media (max-width: 600px) {
     .modal {

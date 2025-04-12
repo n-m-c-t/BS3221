@@ -158,7 +158,7 @@ export function Submission() {
                     : "On-going session"}
                 </td>
                 <td>
-                  <button onClick={() => handleEditSubmission(submission)}>
+                  <button className="action-btn edit" onClick={() => handleEditSubmission(submission)}>
                     Edit
                   </button>
                 </td>

@@ -10,7 +10,7 @@ import { Location } from '../location/location.entity';
 @Injectable()
 export class SubmissionService {
   constructor(
-    @InjectRepository(Submission) private submissionRepo: Repository<Submission>,
+    @InjectRepository(Submission) private submissionRepository: Repository<Submission>,
     @InjectRepository(User) private userRepo: Repository<User>,
     @InjectRepository(Location) private locationRepo: Repository<Location>
   ) {}
@@ -21,28 +21,28 @@ export class SubmissionService {
 
     if (!user || !location) throw new Error('Invalid user or location');
 
-    const submission = this.submissionRepo.create({
+    const submission = this.submissionRepository.create({
       entryTime: createDto.entryTime,
       exitTime: createDto.exitTime,
       user,
       location,
     });
 
-    return this.submissionRepo.save(submission);
+    return this.submissionRepository.save(submission);
   }
 
   async findAll(): Promise<Submission[]> {
-    return this.submissionRepo.find({ relations: ['user', 'location'] });
+    return this.submissionRepository.find({ relations: ['user', 'location'] });
   }  
 
   async findByUser(userID: number): Promise<Submission[]> {
-    return this.submissionRepo.find({
+    return this.submissionRepository.find({
       where: { user: { id: userID } },
     });
   }
 
   async update(id: number, updateDto: UpdateSubmissionDto): Promise<Submission> {
-    const submission = await this.submissionRepo.findOne({
+    const submission = await this.submissionRepository.findOne({
       where: { id },
       relations: ['user', 'location'],
     });
@@ -58,7 +58,14 @@ export class SubmissionService {
       submission.location = location;
     }
   
-    return this.submissionRepo.save(submission);
+    return this.submissionRepository.save(submission);
   }
   
+  async deleteSubmission(id: number): Promise<void> {
+    const result = await this.submissionRepository.delete(id);
+    if (result.affected === 0) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+  }
+
 }
