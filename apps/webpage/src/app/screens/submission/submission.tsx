@@ -80,11 +80,10 @@ export function Submission() {
       return;
     }
 
-    try {
-      if (!locationID || !startTime) {
-        console.error("Please fill in all the fields.");
-        return;
-      }
+    if (!locationID || !startTime) {
+      console.error("Please fill in all the fields.");
+      return;
+    }
 
     if (currentSubmissionId === null) {
       console.error("No submission selected for editing.");
@@ -98,10 +97,9 @@ export function Submission() {
   
     try {
       const response = await API.patch(`/submissions/${currentSubmissionId}`, {
-        userId: user.id,  // Pass userId from AuthContext
-        locationId: locationID,
-        entryTime: entryDateTime,  // Use selected start time with current date
-        exitTime: exitDateTime,    // Set exit time if provided
+        locationID,
+        entryTime: entryDateTime,
+        exitTime: exitDateTime,
       });
 
       if (response.status === 200) {
@@ -194,7 +192,7 @@ export function Submission() {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <h4>{currentSubmissionId ? "Edit Submission" : "Edit Submission"}</h4>
+            <h4>Edit Submission</h4>
             <select
               value={locationID || ""}
               onChange={(e) => setLocationID(Number(e.target.value))}

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Submission } from './submission.entity';
 import { CreateSubmissionDto } from './dto/create.submission.dto';
+import { UpdateSubmissionDto } from './dto/update.submission.dto';
 import { User } from '../user/user.entity';
 import { Location } from '../location/location.entity';
 

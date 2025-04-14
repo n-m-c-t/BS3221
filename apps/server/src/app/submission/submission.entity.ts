@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn} from 'typeorm';
 import { User } from '../user/user.entity';
 import { Location } from '../location/location.entity';
 
@@ -10,9 +10,9 @@ export class Submission {
   @Column()
   entryTime: Date;
 
-  @Column()
-  exitTime: Date;
-
+  @Column({ nullable: true })
+  exitTime?: Date;
+  
   @ManyToOne(() => User, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;

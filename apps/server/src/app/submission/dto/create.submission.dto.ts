@@ -8,7 +8,7 @@ export class CreateSubmissionDto {
 
   @IsDateString()
   @IsNotEmpty()
-  exitTime: Date;
+  exitTime?: Date;
 
   @IsNumber()
   @IsNotEmpty()
