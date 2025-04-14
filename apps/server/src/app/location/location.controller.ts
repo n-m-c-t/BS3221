@@ -6,7 +6,7 @@ import { UseGuards } from '@nestjs/common';
 
 @Controller('locations')
 export class LocationController {
-  constructor(private locationService: LocationService) {}
+  constructor(private readonly locationService: LocationService) {}
 
   // Get all locations
   @UseGuards(JwtAuthGuard)
@@ -30,9 +30,16 @@ export class LocationController {
   }
 
   // Delete a location by ID
+  // @UseGuards(JwtAuthGuard)
+  // @Delete(':id')
+  // async deleteLocation(@Param('id') id: number): Promise<{ message: string }> {
+  //   await this.locationService.deleteLocation(id);
+  //   return { message: `Location ${id} deleted.` };
+  // }
+
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async deleteLocation(@Param('id') id: number): Promise<void> {
-    await this.locationService.deleteLocation(id);
+    return this.locationService.deleteLocation(Number(id));
   }
 }

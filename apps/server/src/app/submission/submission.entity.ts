@@ -1,4 +1,3 @@
-// src/submission/submission.entity.ts
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from '../user/user.entity';
 import { Location } from '../location/location.entity';
@@ -14,11 +13,11 @@ export class Submission {
   @Column()
   exitTime: Date;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @ManyToOne(() => Location, { eager: true })
+  @ManyToOne(() => Location, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'locationId' })
   location: Location;
 

@@ -5,7 +5,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     margin: 10px;
     height: 100vh;
-    width: 80vh;
+    width: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,6 +58,7 @@
   
   .submission-table td {
     font-size: 14px;
+    background-color: white;
   }
   
   /* Modal Overlay for New Submission */
@@ -136,6 +137,21 @@
   
   .modal-actions button.submit:hover {
     background-color: #005a9e;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .action-btn.edit {
+    background-color: #ffcc00;
+    color: #333;
+  }
+  
+  .action-btn.edit:hover {
+    background-color: #e6b800;
   }
   
   /* Adjustments for smaller screens */

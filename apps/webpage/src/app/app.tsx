@@ -21,12 +21,16 @@ export function App() {
         <Route path="/error" element={<Error />} />
         <Route path="/unauthorised" element={<Unauthorised />} />
 
-        {/* Wrap all protected routes here */}
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
             <Route path="/home" element={<Home />} />
-            <Route path="/submission" element={<Submission />} />
             <Route path="/settings" element={<Settings />} />
+          </Route>
+        </Route>
+
+        <Route element={<ProtectedRoute requiredRole="user" />}>
+          <Route element={<Layout />}>
+            <Route path="/submission" element={<Submission />} />
           </Route>
         </Route>
 

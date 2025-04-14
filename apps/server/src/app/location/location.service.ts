@@ -2,11 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Location } from './location.entity';
+import { Submission } from '../submission/submission.entity';
 
 @Injectable()
 export class LocationService {
   constructor(
     @InjectRepository(Location) private locationRepository: Repository<Location>,
+    @InjectRepository(Submission) private sessionRepository: Repository<Submission>,
   ) {}
 
   // Fetch all locations
@@ -28,9 +30,10 @@ export class LocationService {
   // Delete a location by ID
   async deleteLocation(id: number): Promise<void> {
     const result = await this.locationRepository.delete(id);
-
     if (result.affected === 0) {
       throw new Error(`Location with ID ${id} not found`);
     }
-  }
+
+  }  
+
 }

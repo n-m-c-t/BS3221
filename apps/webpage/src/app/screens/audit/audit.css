@@ -1,0 +1,219 @@
+.submission-screen-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin: 10px;
+    height: 100vh;
+    width: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h3 {
+    font-size: 24px;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  /* Button Styling for Filter */
+  .create-btn {
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 2rem;
+  }
+  
+  .create-btn:hover {
+    background-color: #005a9e;
+  }
+  
+  /* Table Styling */
+  .submission-table {
+    width: 100%;
+  }
+  
+  .submission-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .submission-table th,
+  .submission-table td {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .submission-table th {
+    background-color: #f4f4f4;
+    font-weight: 600;
+  }
+  
+  .submission-table td {
+    font-size: 14px;
+    background-color: white;
+  }
+  
+  /* Modal Overlay for Edit */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Modal Styling */
+  .modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .modal h4 {
+    font-size: 18px;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  /* Form Styling for Modal */
+  .modal select,
+  .modal input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  .modal input[type="datetime-local"] {
+    font-size: 14px;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .modal-actions button {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s;
+  }
+  
+  /* Cancel and Submit Button Styles */
+  .modal-actions button.cancel {
+    background-color: #ccc;
+  }
+  
+  .modal-actions button.cancel:hover {
+    background-color: #b3b3b3;
+  }
+  
+  .modal-actions button.submit {
+    background-color: #0078d4;
+    color: white;
+  }
+  
+  .modal-actions button.submit:hover {
+    background-color: #005a9e;
+  }
+  
+  /* Pagination Controls */
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .pagination-controls button {
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination-controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .pagination-controls span {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  /* Action Buttons in Table */
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .action-btn.edit {
+    background-color: #ffcc00;
+    color: #333;
+  }
+  
+  .action-btn.edit:hover {
+    background-color: #e6b800;
+  }
+  
+  .action-btn.delete {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .action-btn.delete:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Adjustments for smaller screens */
+  @media (max-width: 600px) {
+    .modal {
+      padding: 1rem;
+    }
+  
+    .modal-actions {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .modal-actions button {
+      width: 100%;
+    }
+  
+    .pagination-controls {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+  

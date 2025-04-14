@@ -21,7 +21,7 @@ export function Users() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
-  const [showCreateUserModal, setShowCreateUserModal] = useState(false); // New state for create user modal
+  const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -100,7 +100,6 @@ export function Users() {
       const response = await API.post('/users', userToCreate);
       if (response.status === 201) {
         setShowCreateUserModal(false);
-        console.log("User created:", userToCreate);
         setNewUser({
           email: '',
           firstName: '',

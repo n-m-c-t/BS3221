@@ -1,7 +1,8 @@
 import "./submission.css";
-import React, { useEffect, useState } from "react";
 import API from "../../axiosInstance";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface Submission {
   id: number;
@@ -19,7 +20,8 @@ interface Location {
 }
 
 export function Submission() {
-  const { user } = useAuth(); // Access the user from AuthContext
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
   const [showModal, setShowModal] = useState(false);
@@ -27,10 +29,13 @@ export function Submission() {
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
   const [currentSubmissionId, setCurrentSubmissionId] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [submissionsPerPage] = useState(10);
 
   const fetchSubmissions = async () => {
     try {
-      const response = await API.get("/submissions");
+      // Fetch submissions for the current user
+      const response = await API.get(`/submissions/user/${user?.id}`);
       setSubmissions(response.data);
     } catch (error) {
       console.error("Error fetching submissions:", error);
@@ -49,9 +54,22 @@ export function Submission() {
   const handleEditSubmission = (submission: Submission) => {
     setCurrentSubmissionId(submission.id);
     setLocationID(submission.location.id);
-    const entryTime = new Date(submission.entryTime).toISOString().split('T')[1].slice(0, 5); // Extract only time
-    const exitTime = submission.exitTime ? new Date(submission.exitTime).toISOString().split('T')[1].slice(0, 5) : ''; // Set exit time if available
-    setStartTime(entryTime);
+    // Convert the UTC entryTime to local time
+    const entryTime = new Date(submission.entryTime);
+    const entryLocalTime = entryTime.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).slice(0, 5); // Format the time to match the <input type="time"> format
+
+    const exitTime = submission.exitTime
+      ? new Date(submission.exitTime).toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        }).slice(0, 5)
+      : '';
+    setStartTime(entryLocalTime);
     setEndTime(exitTime);
     setShowModal(true);
   };
@@ -68,11 +86,17 @@ export function Submission() {
         return;
       }
 
-      // Get current date and time for entry
-      const currentDate = new Date().toISOString().split('T')[0]; // Only get date
-      const entryDateTime = `${currentDate}T${startTime}:00`;
-      const exitDateTime = endTime ? `${currentDate}T${endTime}:00` : null;
+    if (currentSubmissionId === null) {
+      console.error("No submission selected for editing.");
+      return;
+    }
 
+    // Convert local time back to UTC for entryTime and exitTime
+    const currentDate = new Date().toISOString().split('T')[0];
+    const entryDateTime = new Date(`${currentDate}T${startTime}:00`).toISOString(); // Convert to UTC
+    const exitDateTime = endTime ? new Date(`${currentDate}T${endTime}:00`).toISOString() : null;
+  
+    try {
       const response = await API.patch(`/submissions/${currentSubmissionId}`, {
         userId: user.id,  // Pass userId from AuthContext
         locationId: locationID,
@@ -86,33 +110,28 @@ export function Submission() {
         setStartTime('');
         setEndTime('');
         setCurrentSubmissionId(null);
-        fetchSubmissions();  // Refresh the submission list after saving changes
+        fetchSubmissions();  // Fetch updated submissions after save
       }
     } catch (error) {
       console.error("Error saving submission:", error);
     }
   };
 
-  const handleEndSession = async (submissionId: number) => {
-    const currentDateTime = new Date().toISOString();
+  // Pagination logic
+  const indexOfLastSubmission = currentPage * submissionsPerPage;
+  const indexOfFirstSubmission = indexOfLastSubmission - submissionsPerPage;
+  const currentSubmissions = submissions.slice(indexOfFirstSubmission, indexOfLastSubmission);
 
-    try {
-      const response = await API.patch(`/submissions/${submissionId}`, {
-        exitTime: currentDateTime,  // Set exitTime to current time
-      });
-
-      if (response.status === 200) {
-        fetchSubmissions();  // Refresh submission list after ending session
-      }
-    } catch (error) {
-      console.error("Error ending session:", error);
-    }
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
   };
 
   useEffect(() => {
-    fetchSubmissions();
-    fetchLocations();
-  }, []);
+    if (user) {
+      fetchSubmissions();
+      fetchLocations();
+    }
+  }, [user]);
 
   return (
     <div className="submission-screen-container">
@@ -130,22 +149,46 @@ export function Submission() {
             </tr>
           </thead>
           <tbody>
-            {submissions.map((submission) => (
+            {currentSubmissions.map((submission) => (
               <tr key={submission.id}>
                 <td>{submission.id}</td>
                 <td>{submission.location.name}</td>
                 <td>{new Date(submission.entryTime).toLocaleString()}</td>
-                <td>{submission.exitTime ? new Date(submission.exitTime).toLocaleString() : "Not ended yet"}</td>
                 <td>
-                  <button onClick={() => handleEditSubmission(submission)}>Edit</button>
-                  {submission.exitTime === submission.entryTime && (
-                    <button onClick={() => handleEndSession(submission.id)}>End Session</button>
-                  )}
+                  {submission.exitTime
+                    ? new Date(submission.exitTime).toLocaleString()
+                    : "On-going session"}
+                </td>
+                <td>
+                  <button className="action-btn edit" onClick={() => handleEditSubmission(submission)}>
+                    Edit
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+
+        {/* Pagination Controls */}
+        <div className="pagination-controls">
+          <button 
+            className="pagination-btn"
+            onClick={() => handlePageChange(currentPage - 1)} 
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span className="page-number">
+            Page {currentPage} of {Math.ceil(submissions.length / submissionsPerPage)}
+          </span>
+          <button 
+            className="pagination-btn"
+            onClick={() => handlePageChange(currentPage + 1)} 
+            disabled={currentPage === Math.ceil(submissions.length / submissionsPerPage)}
+          >
+            Next
+          </button>
+        </div>
       </div>
 
       {showModal && (

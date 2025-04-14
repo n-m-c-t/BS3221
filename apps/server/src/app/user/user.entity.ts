@@ -3,7 +3,7 @@ import { Role } from '../role/role.entity'; // Assuming you have a Role entity
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()  // auto-incrementing ID
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ unique: true })
