@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import SideNav from '../sidenav/sidenav';
-import './layout.css'; // Import the new CSS file
+import './layout.css';
 
 const Layout: React.FC = () => {
   return (
@@ -14,3 +14,4 @@ const Layout: React.FC = () => {
 };
 
 export default Layout;
+

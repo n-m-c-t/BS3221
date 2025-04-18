@@ -5,7 +5,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import API from '../../axiosInstance';
 
 export function Settings() {
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");

@@ -27,7 +27,7 @@
       secret:process.env.JWT_SECRET || 'supersecretkey',
       signOptions: { expiresIn: '1h' },}),
     TypeOrmModule.forRoot({
-      type: 'mysql', // or 'mssql' for prod/test
+      type: 'mysql', // or 'mssql' for production
       // host: 'DB_URL',
       host: '127.0.0.1',
       // port: DB_PORT,

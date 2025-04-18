@@ -10,21 +10,18 @@ const SideNav: React.FC = memo(() => {
 
   const { user, hasRole, logout } = useAuth();
 
-  // Memoize the function to open the modal
   const handleLogout = useCallback(() => {
     setShowModal(true);
-  }, []); // No dependencies, so this function is the same for every render
+  }, []);
 
-  // Memoize the function to close the modal
   const handleCloseModal = useCallback(() => {
     setShowModal(false);
-  }, []); // No dependencies, so this function is the same for every render
+  }, []);
 
-  // Handle logout confirmation
   const handleConfirmLogout = useCallback(() => {
     logout()
-    navigate('/login'); // <-- Use navigate to redirect to login page
-  }, [navigate]); // Dependency on navigate (though it doesn't change)
+    navigate('/login');
+  }, [navigate]);
 
   return (
     <div className="sidenav">
