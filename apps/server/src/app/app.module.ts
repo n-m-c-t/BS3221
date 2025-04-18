@@ -6,10 +6,10 @@
   import { JwtStrategy } from './strategies/jwt.strategy';
   import { JwtAuthGuard } from './guards/jwt-auth-guards';
   import { TypeOrmModule } from '@nestjs/typeorm';
-  import { User } from './user/user.entity';  // Import your User entity
-  import { Role } from './role/role.entity'; // Import your Role entity
-  import { UserService } from './user/user.service'; // Import your User service
-  import { UserController } from './user/user.controller'; // Import your User controller
+  import { User } from './user/user.entity'; 
+  import { Role } from './role/role.entity';
+  import { UserService } from './user/user.service'; 
+  import { UserController } from './user/user.controller';
   import { Location } from './location/location.entity';
   import { LocationService } from './location/location.service';
   import { LocationController } from './location/location.controller';
@@ -44,3 +44,4 @@
   })
 
   export class AppModule {}
+
