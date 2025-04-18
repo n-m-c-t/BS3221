@@ -27,19 +27,14 @@
       secret:process.env.JWT_SECRET || 'supersecretkey',
       signOptions: { expiresIn: '1h' },}),
     TypeOrmModule.forRoot({
-      type: 'mysql', // or 'mssql' for production
-      // host: 'DB_URL',
-      host: '127.0.0.1',
-      // port: DB_PORT,
-      port: 3306,
-      // username: 'DB_USER',
-      username: 'root',
-      // password: 'DB_PASS',
-      password: 'password',
-      // database: 'DB_NAME',
-      database: 'mydb',
+      type: 'mssql', // or 'mssql' for development
+      host: process.env.DB_URL,
+      port: parseInt(process.env.DB_PORT || '3306', 10),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
       entities: [User, Role, Location, Submission],
-      synchronize: true, // Set this to false in production
+      synchronize: false, // Set this to true in development
     }),
 
       TypeOrmModule.forFeature([User, Role, Location, Submission]),

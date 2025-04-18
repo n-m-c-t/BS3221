@@ -6,7 +6,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 const SideNav: React.FC = memo(() => {
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate(); // <-- Get the navigate function
+  const navigate = useNavigate();
 
   const { user, hasRole, logout } = useAuth();
 
