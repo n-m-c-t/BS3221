@@ -18,7 +18,6 @@
   import { SubmissionService } from './submission/submission.service';
   import { AuthController } from './auth/auth.controller';
   import { AuthService } from './auth/auth.service';
-  // import { Admin } from 'typeorm';
 
 @Module({
   imports: [
@@ -35,6 +34,12 @@
       database: process.env.DB_NAME,
       entities: [User, Role, Location, Submission],
       synchronize: false, // Set this to true in development
+      extra: {
+        options: {
+          encrypt: true,
+          trustServerCertificate: false,
+        }
+      }
     }),
 
       TypeOrmModule.forFeature([User, Role, Location, Submission]),
