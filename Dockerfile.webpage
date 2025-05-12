@@ -1,0 +1,17 @@
+FROM node:23-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Clean and install dependencies
+RUN rm -rf node_modules package-lock.json && npm install --no-optional
+
+# Copy everything
+COPY . .
+
+# Expose and run
+EXPOSE 4200
+CMD ["npx", "nx", "serve", "webpage"] 
