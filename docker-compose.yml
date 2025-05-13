@@ -5,13 +5,11 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_DATABASE: 'mydb'
-      MYSQL_USER: 'admin'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'root'
     ports:
-      - '3306:3306'
+      - '3307:3306'
     volumes:
-      - fmdb:/var/lib/mysql
+      - mydb:/var/lib/mysql
 
   server:
     build:
@@ -20,13 +18,11 @@ services:
     depends_on:
       - db
     environment:
-      DB_HOST: db
       DB_PORT: 3306
-      DB_USER: user
-      DB_PASSWORD: password
-      DB_NAME: fmdb
+      DB_NAME: mydb
+      DB_PASSWORD: root
     ports:
-      - "3001:3001"
+      - "3001:3000"
     volumes:
       - .:/app
     command: ["npx", "nx", "serve", "server"]
@@ -38,10 +34,10 @@ services:
     depends_on:
       - server
     ports:
-      - "4200:4200"
+      - "4201:4200"
     volumes:
       - .:/app
     command: ["npx", "nx", "serve", "webpage"]
 
 volumes:
-  fmdb:
+  mydb:

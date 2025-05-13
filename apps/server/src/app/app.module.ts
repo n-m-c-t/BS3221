@@ -27,19 +27,14 @@
       secret:process.env.JWT_SECRET || 'supersecretkey',
       signOptions: { expiresIn: '1h' },}),
     TypeOrmModule.forRoot({
-      type: 'mysql', // or 'mssql' for prod/test
-      // host: 'DB_URL',
-      host: '127.0.0.1',
-      // port: DB_PORT,
+      type: 'mysql',
+      host: 'bs3221-mysql-server.mysql.database.azure.com',
       port: 3306,
-      // username: 'DB_USER',
-      username: 'root',
-      // password: 'DB_PASS',
-      password: 'password',
-      // database: 'DB_NAME',
-      database: 'mydb',
+      username: 'azureAdminUser',
+      password: 'QKs9GQmo1x2uqVgkMAcg',
+      database: 'bs3221database',
       entities: [User, Role, Location, Submission],
-      synchronize: true, // Set this to false in production
+      synchronize: false,  // keep false in production
     }),
 
       TypeOrmModule.forFeature([User, Role, Location, Submission]),

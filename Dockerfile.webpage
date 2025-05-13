@@ -1,0 +1,26 @@
+# Stage 1: Build the application
+FROM node:18-alpine AS builder
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install dependencies cleanly
+RUN npm ci
+
+RUN rm -rf node_modules package-lock.json
+RUN npm install
+# Copy everything else (after node_modules for caching)
+COPY . .
+
+# Reset Nx cache (optional but clean)
+# RUN npx nx reset
+
+# Build the app
+RUN npx nx build webpage --configuration=production
+
+# Stage 2: Nginx serving static content
+FROM nginx:stable-alpine
+COPY --from=builder /app/dist/apps/webpage /usr/share/nginx/html/
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

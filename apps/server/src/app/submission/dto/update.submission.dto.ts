@@ -1,4 +1,3 @@
-// src/submission/dto/update-submission.dto.ts
 import { IsOptional, IsDateString, IsNumber } from 'class-validator';
 
 export class UpdateSubmissionDto {

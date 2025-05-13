@@ -19,7 +19,7 @@ export class AuthService {
     if (!user) {
       throw new Error('Invalid credentials');
     }
-  
+    
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       throw new Error('Invalid credentials');
