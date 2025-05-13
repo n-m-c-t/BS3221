@@ -1,17 +1,35 @@
-FROM node:23-slim
+# ---------- Builder Stage ----------
+FROM node:18-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
+# Install dependencies
 COPY package.json package-lock.json ./
+RUN npm ci
 
-# Clean and install dependencies
-RUN rm -rf node_modules package-lock.json && npm install --no-optional
+RUN rm -rf node_modules package-lock.json
+RUN npm install
 
-# Copy everything
+# Copy the rest of the source files
 COPY . .
 
-# Expose and run
+# Build the app (Nest.js server)
+RUN npx nx build server --configuration=production
+
+# ---------- Final Runtime Stage ----------
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy only the built output and necessary files
+COPY --from=builder /app/dist/apps/server ./dist
+COPY --from=builder /app/package.json ./
+
+# Install only production dependencies
+RUN rm -rf node_modules package-lock.json
+RUN npm install --omit=dev
+
 EXPOSE 3000
-CMD ["npx", "nx", "serve", "server"] 
+
+# Start the app
+CMD ["node", "dist/main.js"]

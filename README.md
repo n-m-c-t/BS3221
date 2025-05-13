@@ -1,5 +1,25 @@
 # BS3221
 
+## Deployment Steps
+
+Docker build of each services
+```sh
+docker build -f Dockerfile.webpage -t bs3221containerregistry.azurecr.io/bs3221-webpage:latest.
+
+docker build -f Dockerfile.server -t bs3221containerregistry.azurecr.io/bs3221-server:latest.
+```
+
+In powershell terminal, authenticate with Azure-CLI
+```sh
+az login
+
+az acr login --name bs3221ContainerRegistry
+
+docker push bs3221containerregistry.azurecr.io/bs3221-webpage:latest
+
+docker push bs3221containerregistry.azurecr.io/bs3221-server:latest
+````
+
 ## Local Testing using Makefile
 
 Start everything in detached mode, use:
