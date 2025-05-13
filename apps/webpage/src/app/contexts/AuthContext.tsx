@@ -25,8 +25,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  // const backendURL = process.env.BACKEND_URL || 'http://localhost:3000';
-  const backendURL = 'https://bs3221-server.greenwater-a485c573.uksouth.azurecontainerapps.io:3000';
+  const backendURL = process.env.BACKEND_URL || 'http://localhost:3000';
 
   const login = async (email: string, password: string) => {
     try {
